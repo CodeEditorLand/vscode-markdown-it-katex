@@ -31,7 +31,7 @@
 		"watch": "tsc -p . -watch"
 	},
 	"dependencies": {
-		"katex": "0.16.9"
+		"katex": "0.16.10"
 	},
 	"devDependencies": {
 		"@types/katex": "0.16.7",
