@@ -34,15 +34,15 @@
 		"test-render": "node test/test-render.js test/test.md > test/out.html"
 	},
 	"dependencies": {
-		"katex": "^0.16.4"
+		"katex": "0.16.10"
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
-		"@types/katex": "^0.16.0",
-		"@types/markdown-it": "^12.2.3",
-		"markdown-it": "^14.0.0",
-		"tape": "^5.6.0"
+		"@types/katex": "0.16.7",
+		"@types/markdown-it": "14.0.1",
+		"markdown-it": "14.1.0",
+		"tape": "5.7.5"
 	},
 	"publishConfig": {
 		"access": "public"
