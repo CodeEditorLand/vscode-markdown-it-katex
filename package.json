@@ -3,19 +3,22 @@
 	"version": "0.0.1",
 	"private": false,
 	"description": "Markdown-it plugin that provides VS Code's KaTeX support",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"keywords": [
+		"land"
+	],
+	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandMarkdownItKatex#readme",
 	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
+		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandMarkdownItKatex/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+		"url": "git+HTTPS://github.com/CodeEditorLand/LandMarkdownItKatex.git"
 	},
 	"license": "SEE LICENSE IN LICENSE",
 	"author": {
-		"name": "Playform",
-		"email": "Hello@Playform.Cloud",
-		"url": "https://playform.cloud"
+		"name": "🌆 — Land —",
+		"email": "Land@PlayForm.Cloud",
+		"url": "HTTPS://Land.PlayForm.Cloud"
 	},
 	"type": "module",
 	"main": "dist/index.js",
@@ -25,22 +28,21 @@
 		"types.d.ts"
 	],
 	"scripts": {
+		"Document": "Document 'Source/**/*.ts'",
 		"compile": "tsc -p .",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"test-render": "node test/test-render.js test/test.md > test/out.html",
-		"watch": "tsc -p . -watch"
+		"prepublishOnly": "Build 'Source/**/*.ts'",
+		"test-render": "node test/test-render.js test/test.md > test/out.html"
 	},
 	"dependencies": {
-		"katex": "0.16.9"
+		"katex": "0.16.10"
 	},
 	"devDependencies": {
+		"@playform/build": "0.0.7",
+		"@playform/document": "0.0.6",
 		"@types/katex": "0.16.7",
-		"@types/markdown-it": "13.0.7",
+		"@types/markdown-it": "14.0.1",
 		"markdown-it": "14.1.0",
-		"markdown-it-testgen": "0.1.6",
-		"tape": "5.7.5",
-		"typescript": "5.4.2",
-		"typescript-esbuild": "0.4.5"
+		"tape": "5.7.5"
 	},
 	"publishConfig": {
 		"access": "public"
