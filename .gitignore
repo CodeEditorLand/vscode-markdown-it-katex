@@ -1,7 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### macOS template
 # General
-.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -160,7 +159,6 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 
 # next.js build output
 .next
