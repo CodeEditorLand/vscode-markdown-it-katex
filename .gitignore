@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### macOS template
 # General
+.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -138,6 +139,7 @@ bower_components
 build/Release
 
 # Dependency directories
+node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -159,6 +161,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+.env
 
 # next.js build output
 .next
