@@ -18,6 +18,6 @@
 		"@types/katex": "^0.16.7",
 		"@types/markdown-it": "^14.1.1",
 		"markdown-it": "^14.1.0",
-		"tape": "^5.8.0"
+		"tape": "^5.8.1"
 	}
 }
