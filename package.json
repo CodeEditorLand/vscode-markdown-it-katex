@@ -12,7 +12,7 @@
 		"test-render": "node test/test-render.js test/test.md > test/out.html"
 	},
 	"dependencies": {
-		"katex": "0.16.10"
+		"katex": "0.16.11"
 	},
 	"devDependencies": {
 		"@types/katex": "0.16.7",
