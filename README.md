@@ -28,8 +28,8 @@ npm install @vscode/markdown-it-katex
 Use it in your javascript
 
 ```javascript
-var md = require("markdown-it")(),
-	mk = require("@vscode/markdown-it-katex");
+var md = require('markdown-it')(),
+    mk = require('@vscode/markdown-it-katex').default;
 
 md.use(mk);
 
