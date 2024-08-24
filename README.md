@@ -1,14 +1,17 @@
 # Markdown-it Katex
 
-Markdown it plugin that adds [KaTeX](https://github.com/Khan/KaTeX) rendering. This is used by VS Code to render math in markdown.
+Markdown it plugin that adds [KaTeX](https://github.com/Khan/KaTeX) rendering.
+This is used by VS Code to render math in markdown.
 
 Need convincing?
 
-* Check out the comparative benchmark: [KaTeX vs MathJax](https://jsperf.com/katex-vs-mathjax/42)
+-   Check out the comparative benchmark:
+    [KaTeX vs MathJax](https://jsperf.com/katex-vs-mathjax/42)
 
-Originally forked from [@iktakahiro/markdown-it-katex](https://github.com/iktakahiro/markdown-it-katex)
+Originally forked from
+[@iktakahiro/markdown-it-katex](https://github.com/iktakahiro/markdown-it-katex)
 
-## Usage 
+## Usage
 
 Install markdown-it
 
@@ -31,25 +34,30 @@ var md = require('markdown-it')(),
 md.use(mk);
 
 // double backslash is required for javascript strings, but not html input
-var result = md.render('# Math Rulez! \n  $\\sqrt{3x-1}+(1+x)^2$');
+var result = md.render("# Math Rulez! \n  $\\sqrt{3x-1}+(1+x)^2$");
 ```
 
 Include the KaTeX stylesheet in your html:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+	rel="stylesheet" />
 ```
 
-If you're using the default markdown-it parser, I also recommend the [github stylesheet](https://github.com/sindresorhus/github-markdown-css):
+If you're using the default markdown-it parser, I also recommend the
+[github stylesheet](https://github.com/sindresorhus/github-markdown-css):
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css"/>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css"
+	rel="stylesheet" />
 ```
 
 `KaTeX` options can be supplied with the second argument to use.
 
 ```javascript
-md.use(mk, {"throwOnError" : false, "errorColor" : " #cc0000"});
+md.use(mk, { "throwOnError": false, "errorColor": " #cc0000" });
 ```
 
 ## Examples
@@ -82,7 +90,8 @@ $$\begin{array}{c}
 
 ## Syntax
 
-Math parsing in markdown is designed to agree with the conventions set by pandoc:
+Math parsing in markdown is designed to agree with the conventions set by
+pandoc:
 
     Anything between two $ characters will be treated as TeX math. The opening $ must
     have a non-space character immediately to its right, while the closing $ must
