@@ -11,7 +11,7 @@ Need convincing?
 Originally forked from
 [@iktakahiro/markdown-it-katex](https://github.com/iktakahiro/markdown-it-katex)
 
-## Usage
+## 🛠️ Usage
 
 Install markdown-it
 
