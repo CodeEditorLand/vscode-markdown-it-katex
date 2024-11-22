@@ -14,7 +14,9 @@ function isValidInlineDelim(
 	pos: number,
 ): { can_open: boolean; can_close: boolean } {
 	const prevChar = state.src[pos - 1];
+
 	const char = state.src[pos];
+
 	const nextChar = state.src[pos + 1];
 
 	if (char !== "$") {
@@ -22,7 +24,9 @@ function isValidInlineDelim(
 	}
 
 	let canOpen = false;
+
 	let canClose = false;
+
 	if (
 		prevChar !== "$" &&
 		prevChar !== "\\" &&
@@ -58,8 +62,11 @@ function isValidBlockDelim(
 	pos: number,
 ): { readonly can_open: boolean; readonly can_close: boolean } {
 	const prevChar = state.src[pos - 1];
+
 	const char = state.src[pos];
+
 	const nextChar = state.src[pos + 1];
+
 	const nextCharPlus1 = state.src[pos + 2];
 
 	if (
@@ -81,6 +88,7 @@ function inlineMath(state: StateInline, silent: boolean): boolean {
 	}
 
 	const lastToken = state.tokens.at(-1);
+
 	if (lastToken?.type === "html_inline") {
 		// We may be inside of inside of inline html
 		if (/^<\w+.+[^/]>$/.test(lastToken.content)) {
@@ -89,11 +97,13 @@ function inlineMath(state: StateInline, silent: boolean): boolean {
 	}
 
 	let res = isValidInlineDelim(state, state.pos);
+
 	if (!res.can_open) {
 		if (!silent) {
 			state.pending += "$";
 		}
 		state.pos += 1;
+
 		return true;
 	}
 
@@ -102,12 +112,16 @@ function inlineMath(state: StateInline, silent: boolean): boolean {
 	// be the first character in state.src, which is known since
 	// we have found an opening delimieter already.
 	let start = state.pos + 1;
+
 	let match = start;
+
 	let pos;
+
 	while ((match = state.src.indexOf("$", match)) !== -1) {
 		// Found potential $, look for escapes, pos will point to
 		// first non escape when complete
 		pos = match - 1;
+
 		while (state.src[pos] === "\\") {
 			pos -= 1;
 		}
@@ -125,6 +139,7 @@ function inlineMath(state: StateInline, silent: boolean): boolean {
 			state.pending += "$";
 		}
 		state.pos = start;
+
 		return true;
 	}
 
@@ -134,16 +149,19 @@ function inlineMath(state: StateInline, silent: boolean): boolean {
 			state.pending += "$$";
 		}
 		state.pos = start + 1;
+
 		return true;
 	}
 
 	// Check for valid closing delimiter
 	res = isValidInlineDelim(state, match);
+
 	if (!res.can_close) {
 		if (!silent) {
 			state.pending += "$";
 		}
 		state.pos = start;
+
 		return true;
 	}
 
@@ -154,6 +172,7 @@ function inlineMath(state: StateInline, silent: boolean): boolean {
 	}
 
 	state.pos = match + 1;
+
 	return true;
 }
 
@@ -179,6 +198,7 @@ function blockMath(
 	}
 
 	pos += 2;
+
 	let firstLine = state.src.slice(pos, max);
 
 	if (silent) {
@@ -226,6 +246,7 @@ function blockMath(
 		(lastLine && lastLine.trim() ? lastLine : "");
 	token.map = [start, state.line];
 	token.markup = "$$";
+
 	return true;
 }
 
@@ -236,10 +257,13 @@ function blockBareMath(
 	silent: boolean,
 ): boolean {
 	const startPos = state.bMarks[start] + state.tShift[start];
+
 	const startMax = state.eMarks[start];
+
 	const firstLine = state.src.slice(startPos, startMax);
 
 	const beginMatch = firstLine.match(/^\s*\\begin\s*\{([^{}]+)\}/);
+
 	if (!beginMatch) {
 		return false;
 	}
@@ -247,8 +271,11 @@ function blockBareMath(
 	if (start > 0) {
 		// Previous line must be blank for bare blocks. There are instead handled by inlineBareBlock
 		const previousStart = state.bMarks[start - 1] + state.tShift[start - 1];
+
 		const previousEnd = state.eMarks[start - 1];
+
 		const previousLine = state.src.slice(previousStart, previousEnd);
+
 		if (!/^\s*$/.test(previousLine)) {
 			return false;
 		}
@@ -259,8 +286,11 @@ function blockBareMath(
 	}
 
 	const beginEndStack: string[] = [];
+
 	let next = start;
+
 	let lastLine: string | undefined;
+
 	let found = false;
 	outer: for (; !found; next++) {
 		if (next >= end) {
@@ -268,6 +298,7 @@ function blockBareMath(
 		}
 
 		const pos = state.bMarks[next] + state.tShift[next];
+
 		const max = state.eMarks[next];
 
 		if (pos < max && state.tShift[next] < state.blkIndent) {
@@ -276,14 +307,17 @@ function blockBareMath(
 		}
 
 		const line = state.src.slice(pos, max);
+
 		for (const match of line.matchAll(/(\\begin|\\end)\s*\{([^{}]+)\}/g)) {
 			if (match[1] === "\\begin") {
 				beginEndStack.push(match[2].trim());
 			} else if (match[1] === "\\end") {
 				beginEndStack.pop();
+
 				if (!beginEndStack.length) {
 					lastLine = state.src.slice(pos, max);
 					found = true;
+
 					break outer;
 				}
 			}
@@ -300,6 +334,7 @@ function blockBareMath(
 	).trim();
 	token.map = [start, state.line];
 	token.markup = "$$";
+
 	return true;
 }
 
@@ -311,11 +346,13 @@ function inlineMathBlock(state: StateInline, silent: boolean): boolean {
 	}
 
 	res = isValidBlockDelim(state, state.pos);
+
 	if (!res.can_open) {
 		if (!silent) {
 			state.pending += "$$";
 		}
 		state.pos += 2;
+
 		return true;
 	}
 
@@ -325,10 +362,12 @@ function inlineMathBlock(state: StateInline, silent: boolean): boolean {
 	// we have found an opening delimieter already.
 	start = state.pos + 2;
 	match = start;
+
 	while ((match = state.src.indexOf("$$", match)) !== -1) {
 		// Found potential $$, look for escapes, pos will point to
 		// first non escape when complete
 		pos = match - 1;
+
 		while (state.src[pos] === "\\") {
 			pos -= 1;
 		}
@@ -346,6 +385,7 @@ function inlineMathBlock(state: StateInline, silent: boolean): boolean {
 			state.pending += "$$";
 		}
 		state.pos = start;
+
 		return true;
 	}
 
@@ -355,16 +395,19 @@ function inlineMathBlock(state: StateInline, silent: boolean): boolean {
 			state.pending += "$$$$";
 		}
 		state.pos = start + 2;
+
 		return true;
 	}
 
 	// Check for valid closing delimiter
 	res = isValidBlockDelim(state, match);
+
 	if (!res.can_close) {
 		if (!silent) {
 			state.pending += "$$";
 		}
 		state.pos = start;
+
 		return true;
 	}
 
@@ -376,6 +419,7 @@ function inlineMathBlock(state: StateInline, silent: boolean): boolean {
 	}
 
 	state.pos = match + 2;
+
 	return true;
 }
 
@@ -395,16 +439,20 @@ function inlineBareBlock(state: StateInline, silent: boolean): boolean {
 	const lines = text.split(/\n/g).slice(1);
 
 	let foundLine: number | undefined;
+
 	const beginEndStack: string[] = [];
 	outer: for (var i = 0; i < lines.length; ++i) {
 		const line = lines[i];
+
 		for (const match of line.matchAll(/(\\begin|\\end)\s*\{([^{}]+)\}/g)) {
 			if (match[1] === "\\begin") {
 				beginEndStack.push(match[2].trim());
 			} else if (match[1] === "\\end") {
 				beginEndStack.pop();
+
 				if (!beginEndStack.length) {
 					foundLine = i;
+
 					break outer;
 				}
 			}
@@ -425,6 +473,7 @@ function inlineBareBlock(state: StateInline, silent: boolean): boolean {
 	token.markup = "$$";
 	token.content = text.slice(1, endIndex);
 	state.pos = state.pos + endIndex;
+
 	return true;
 }
 
@@ -440,6 +489,7 @@ function handleMathInHtml(
 
 	for (let index = tokens.length - 1; index >= 0; index--) {
 		const currentToken = tokens[index];
+
 		const newTokens: Token[] = [];
 
 		if (currentToken.type !== "html_block") {
@@ -455,7 +505,9 @@ function handleMathInHtml(
 			}
 
 			const html_before_math = match.groups.html_before_math;
+
 			const math = match.groups.math;
+
 			const html_after_math = match.groups.html_after_math;
 
 			if (html_before_math) {
@@ -511,13 +563,17 @@ export default function (
 	options?: MarkdownKatexOptions,
 ) {
 	const enableBareBlocks = options?.enableBareBlocks;
+
 	const enableMathBlockInHtml = options?.enableMathBlockInHtml;
+
 	const enableMathInlineInHtml = options?.enableMathInlineInHtml;
+
 	const enableFencedBlocks = options?.enableFencedBlocks;
 
 	// #region Parsing
 	md.inline.ruler.after("escape", "math_inline", inlineMath);
 	md.inline.ruler.after("escape", "math_inline_block", inlineMathBlock);
+
 	if (enableBareBlocks) {
 		md.inline.ruler.before(
 			"text",
@@ -575,6 +631,7 @@ export default function (
 	const katexInline = (latex: string) => {
 		const displayMode =
 			/\\begin\{(align|equation|gather|cd|alignat)\}/gi.test(latex);
+
 		try {
 			return katex.renderToString(latex, { ...options, displayMode });
 		} catch (error) {
@@ -621,6 +678,7 @@ export default function (
 			self,
 		) {
 			const token = tokens[idx];
+
 			if (
 				token.info.trim().toLowerCase() === mathLanguageId &&
 				enableFencedBlocks
