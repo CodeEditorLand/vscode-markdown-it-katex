@@ -14,7 +14,7 @@
 		"types.d.ts"
 	],
 	"main": "dist/index.js",
-	"name": "@vscode/markdown-it-katex",
+	"name": "@codeeditorland/markdown-it-katex",
 	"scripts": {
 		"compile": "tsc -p .",
 		"test-render": "node test/test-render.js test/test.md > test/out.html"
