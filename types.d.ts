@@ -1,5 +1,5 @@
-import type MarkdownIt from 'markdown-it';
-import Katex from "katex"
+import Katex from "katex";
+import type MarkdownIt from "markdown-it";
 
 export interface MarkdownKatexOptions {
 	/**
@@ -28,15 +28,15 @@ export interface MarkdownKatexOptions {
 	 */
 	readonly enableFencedBlocks?: boolean;
 
-    /**
-     * Controls if an exception is thrown on katex errors.
-     */
-    readonly throwOnError?: boolean;
+	/**
+	 * Controls if an exception is thrown on katex errors.
+	 */
+	readonly throwOnError?: boolean;
 
-    /**
-     * Support for custom katex instance for extension such as mhchem 
-     */
-    katex?: typeof Katex
+	/**
+	 * Support for custom katex instance for extension such as mhchem
+	 */
+	katex?: typeof Katex;
 }
 
 export default function (
