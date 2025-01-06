@@ -12,12 +12,12 @@
 		"test-render": "node test/test-render.js test/test.md > test/out.html"
 	},
 	"dependencies": {
-		"katex": "0.16.4"
+		"katex": "0.16.19"
 	},
 	"devDependencies": {
-		"@types/katex": "0.16.0",
-		"@types/markdown-it": "12.2.3",
-		"markdown-it": "14.0.0",
-		"tape": "5.6.0"
+		"@types/katex": "0.16.7",
+		"@types/markdown-it": "14.1.2",
+		"markdown-it": "14.1.0",
+		"tape": "5.9.0"
 	}
 }
